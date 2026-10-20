@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+    <meta name="theme-color" content="#173b37">
+    <title>Sala dos mestres | Castelo do Eco</title>
+    <link rel="stylesheet" href="estilo.css">
+    <script type="module" src="js/professor.js"></script>
+  </head>
+  <body>
+    <header class="cabecalho">
+      <a class="marca" href="./" aria-label="Voltar ao Castelo do Eco"><img class="marca-ilustracao" src="img/castelo-eco.svg" alt="" width="36" height="36"><span>Castelo do Eco</span></a>
+      <nav aria-label="Navegação principal"><a href="./">Salão do eco</a><a href="docs/index.html">Biblioteca</a></nav>
+    </header>
+    <main class="pagina">
+      <section class="intro">
+        <p class="sobretitulo">Acesso da turma</p>
+        <h1>Sala dos mestres</h1>
+        <p>As memórias disponíveis são deste navegador compartilhado.</p>
+      </section>
+      <div id="aviso-professor" class="aviso" role="status" aria-live="polite" hidden></div>
+      <section class="painel perfil-painel" aria-labelledby="professor-titulo">
+        <div class="secao-cabecalho"><div><p class="sobretitulo">Acompanhamento</p><h2 id="professor-titulo">Professor</h2></div><button id="entrar-professor" type="button">Entrar como professor</button></div>
+        <div id="autenticacao-professor" class="autenticacao" hidden>
+          <label for="pin-professor">PIN do professor</label>
+          <input id="pin-professor" type="password" inputmode="numeric" autocomplete="off" maxlength="8">
+          <button id="definir-professor" type="button" hidden>Definir PIN do professor</button>
+          <div id="confirmar-professor-regiao" hidden>
+            <label for="confirmar-professor">Confirmar PIN do professor</label>
+            <input id="confirmar-professor" type="password" inputmode="numeric" autocomplete="off" maxlength="8">
+            <button id="salvar-confirmacao-professor" type="button">Confirmar PIN do professor</button>
+          </div>
+          <button id="acessar-professor" type="button" hidden>Acessar como professor</button>
+        </div>
+        <div id="modo-professor" hidden>
+          <p class="dica">Os ecos listados só aparecem neste navegador. Memórias de outros computadores não são compartilhadas.</p>
+          <div id="lista-professor" class="lista-professor"></div>
+          <button id="sair-professor" type="button" class="botao-secundario">Sair do modo professor</button>
+        </div>
+      </section>
+      <section class="painel perfil-painel" aria-labelledby="admin-titulo">
+        <div class="secao-cabecalho"><div><p class="sobretitulo">Gerenciamento</p><h2 id="admin-titulo">Administrador</h2></div><button id="entrar-admin" type="button">Entrar como administrador</button></div>
+        <div id="autenticacao-admin" class="autenticacao" hidden>
+          <label for="pin-admin">PIN do administrador</label>
+          <input id="pin-admin" type="password" inputmode="numeric" autocomplete="off" maxlength="8">
+          <button id="definir-admin" type="button" hidden>Definir PIN do administrador</button>
+          <div id="confirmar-admin-regiao" hidden>
+            <label for="confirmar-admin">Confirmar PIN do administrador</label>
+            <input id="confirmar-admin" type="password" inputmode="numeric" autocomplete="off" maxlength="8">
+            <button id="salvar-confirmacao-admin" type="button">Confirmar PIN do administrador</button>
+          </div>
+          <button id="acessar-admin" type="button" hidden>Acessar como administrador</button>
+        </div>
+        <div id="modo-admin" hidden>
+          <p class="dica">Apagar memórias remove os ecos guardados neste navegador.</p>
+          <label for="confirmar-apagar">Confirme apagamento digitando APAGAR</label>
+          <input id="confirmar-apagar" autocomplete="off">
+          <button id="apagar-memorias" type="button">Apagar todas as memórias</button>
+          <button id="sair-admin" type="button" class="botao-secundario">Sair do modo administrador</button>
+        </div>
+        <div id="aviso-admin" class="aviso" role="status" aria-live="polite" hidden></div>
+      </section>
+    </main>
+    <footer><span>Um eco de cada vez.</span><a href="./">Voltar ao Castelo do Eco</a></footer>
+  </body>
+</html>

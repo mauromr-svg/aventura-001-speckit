@@ -74,7 +74,7 @@ npm run lint
 npm audit
 ```
 
-O núcleo matemático (`src/core`) não depende de console, arquivos nem rede. Assim ele pode ser reaproveitado na futura versão web (Castelo do Eco).
+O núcleo matemático (`src/core`) não depende de console, arquivos nem rede. A Sala do Eco e o Castelo do Eco compartilham exatamente a mesma lógica de previsão.
 
 Estrutura:
 
@@ -88,3 +88,31 @@ tests/              unit, integration e acceptance
 ```
 
 Especificação, plano e tarefas: [specs/001-sala-do-eco-console/](specs/001-sala-do-eco-console/).
+
+## Castelo do Eco (versão web)
+
+O Castelo do Eco é uma segunda interface para o mesmo núcleo matemático. Ele roda no navegador, sem servidor de aplicação: o servidor local abaixo entrega apenas arquivos estáticos.
+
+```bash
+npm install
+npm run web
+```
+
+Abra [http://127.0.0.1:8080/web/](http://127.0.0.1:8080/web/). O endereço e a porta são importantes porque o histórico e os PINs pertencem à origem do navegador. Para escolher outra porta, use `ECO_WEB_PORT=9000 npm run web`; essa porta terá um histórico separado.
+
+As memórias da web ficam no IndexedDB daquele navegador e não são compartilhadas com outros computadores nem com o console. Em sala, use um computador compartilhado pela turma para que o professor veja os ecos dos alunos. Apagar os dados do site no navegador também apaga essas memórias; o Castelo solicita armazenamento persistente, mas o navegador ainda pode removê-lo.
+
+Defina os PINs de professor e administrador na primeira utilização, antes de liberar o navegador para os alunos. Os PINs são proteção leve contra uso acidental, não substituem login.
+
+Após o primeiro carregamento, o Castelo, o cálculo, o gráfico e a biblioteca de padrões continuam disponíveis sem conexão. A documentação fica em [web/docs/](web/docs/).
+
+Testes do navegador:
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
+Os testes unitários, de integração e aceitação do console e da web continuam em `npm test`; `npm run lint` e `npm audit` verificam estilo e dependências.
+
+Plano e tarefas da Fase 2: [specs/002-castelo-do-eco-web/](specs/002-castelo-do-eco-web/).

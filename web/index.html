@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+    <meta name="theme-color" content="#173b37">
+    <title>Castelo do Eco</title>
+    <link rel="stylesheet" href="estilo.css">
+    <script type="module" src="js/main.js"></script>
+  </head>
+  <body>
+    <header class="cabecalho">
+      <a class="marca" href="./" aria-label="Castelo do Eco, início">
+        <img class="marca-ilustracao" src="img/castelo-eco.svg" alt="" width="36" height="36">
+        <span>Castelo do Eco</span>
+      </a>
+      <nav aria-label="Navegação principal">
+        <a href="docs/index.html">Biblioteca</a>
+        <a href="professor.html">Sala dos mestres</a>
+      </nav>
+    </header>
+    <main class="pagina">
+      <section class="intro" aria-labelledby="titulo-principal">
+        <p class="sobretitulo"><img class="eco-sinal" src="img/eco-sinal.svg" alt=""> A matemática responde</p>
+        <h1 id="titulo-principal">O que vem depois?</h1>
+        <p>Deixe uma sequência no salão e descubra o padrão que ecoa.</p>
+        <p id="nome-atual" class="saudacao" hidden></p>
+      </section>
+      <section id="boas-vindas" class="painel nome-painel" hidden>
+        <label for="nome-aluno">Seu nome ou apelido</label>
+        <div class="linha-controles">
+          <input id="nome-aluno" name="nome" maxlength="40" autocomplete="nickname" required>
+          <button id="entrar" type="button">Entrar na sala</button>
+        </div>
+        <p id="erro-nome" class="mensagem erro" aria-live="polite"></p>
+      </section>
+      <section id="eco" class="eco-layout" hidden>
+        <div class="entrada-coluna">
+          <form id="form-eco" class="painel formulario">
+            <label for="sequencia">Sua sequência</label>
+            <textarea id="sequencia" name="sequencia" rows="3" spellcheck="false" placeholder="Ex.: 3, 6, 9, 12"></textarea>
+            <p class="dica">Separe os números com vírgula ou espaço. Para vírgula decimal, use ponto e vírgula.</p>
+            <button id="ouvir" type="submit">Ouvir o eco</button>
+          </form>
+          <div id="resposta" class="resposta" aria-live="polite" aria-atomic="true"></div>
+          <div id="aviso" class="aviso" role="status" hidden></div>
+        </div>
+        <section id="grafico-regiao" class="grafico-regiao" aria-label="Gráfico da sequência" hidden></section>
+      </section>
+      <section class="historico-regiao" aria-labelledby="titulo-historico">
+        <div class="secao-cabecalho">
+          <div><p class="sobretitulo">Ecos guardados</p><h2 id="titulo-historico">Suas memórias</h2></div>
+          <span id="contador-memorias" class="contador">0 ecos</span>
+        </div>
+        <p id="historico-vazio" class="texto-vazio">Seus próximos ecos aparecerão aqui.</p>
+        <ol id="historico" class="lista-historico"></ol>
+      </section>
+    </main>
+    <footer><span>Um eco de cada vez.</span><a href="docs/index.html">Explorar os padrões matemáticos</a></footer>
+  </body>
+</html>

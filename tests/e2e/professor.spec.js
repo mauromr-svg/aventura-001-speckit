@@ -1,0 +1,71 @@
+import { test, expect, entrarComNome } from './ajudantes.js';
+
+test('professor define PIN e vê ecos agrupados; administrador confirma exclusão', async ({ page }) => {
+  await page.goto('./');
+  await entrarComNome(page, 'Ana');
+  await page.getByLabel('Sua sequência').fill('3, 6, 9');
+  await page.getByRole('button', { name: 'Ouvir o eco' }).click();
+  await expect(page.locator('#resposta')).toContainText('12');
+  await page.getByLabel('Sua sequência').fill('abc, 2, 3');
+  await page.getByRole('button', { name: 'Ouvir o eco' }).click();
+  await expect(page.locator('#resposta')).toContainText('não é um número');
+
+  await page.goto('professor.html');
+  await page.getByRole('button', { name: 'Entrar como professor' }).click();
+  await page.getByLabel('PIN do professor', { exact: true }).fill('1234');
+  await page.getByRole('button', { name: 'Definir PIN do professor' }).click();
+  await page.getByLabel('Confirmar PIN do professor').fill('1234');
+  await page.getByRole('button', { name: 'Confirmar PIN do professor' }).click();
+  await expect(page.locator('#lista-professor')).toContainText('Ana');
+  await expect(page.locator('#lista-professor')).toContainText('3, 6, 9');
+  await expect(page.locator('#lista-professor')).toContainText('abc, 2, 3');
+  await expect(page.locator('body')).toContainText('só aparecem neste navegador');
+  await expect(page.locator('body')).not.toContainText('1234');
+
+  await page.getByRole('button', { name: 'Entrar como administrador' }).click();
+  await page.getByLabel('PIN do administrador', { exact: true }).fill('9876');
+  await page.getByRole('button', { name: 'Definir PIN do administrador' }).click();
+  await page.getByLabel('Confirmar PIN do administrador').fill('9876');
+  await page.getByRole('button', { name: 'Confirmar PIN do administrador' }).click();
+  await page.getByLabel('Confirme apagamento digitando APAGAR').fill('nao');
+  await page.getByRole('button', { name: 'Apagar todas as memórias' }).click();
+  await expect(page.locator('#aviso-admin')).toContainText('Nada foi apagado');
+  await page.getByLabel('Confirme apagamento digitando APAGAR').fill('APAGAR');
+  await page.getByRole('button', { name: 'Apagar todas as memórias' }).click();
+  await expect(page.locator('#aviso-admin')).toContainText('Todas as memórias foram apagadas');
+});
+
+test('três PINs errados negam acesso e PINs de papéis diferentes não se misturam', async ({ page }) => {
+  await page.goto('professor.html');
+  await page.getByRole('button', { name: 'Entrar como professor' }).click();
+  await page.getByLabel('PIN do professor', { exact: true }).fill('1234');
+  await page.getByRole('button', { name: 'Definir PIN do professor' }).click();
+  await page.getByLabel('Confirmar PIN do professor').fill('1234');
+  await page.getByRole('button', { name: 'Confirmar PIN do professor' }).click();
+  await page.getByRole('button', { name: 'Sair do modo professor' }).click();
+  await page.getByRole('button', { name: 'Entrar como administrador' }).click();
+  await page.getByLabel('PIN do administrador', { exact: true }).fill('5678');
+  await page.getByRole('button', { name: 'Definir PIN do administrador' }).click();
+  await page.getByLabel('Confirmar PIN do administrador').fill('5678');
+  await page.getByRole('button', { name: 'Confirmar PIN do administrador' }).click();
+  await page.getByRole('button', { name: 'Sair do modo administrador' }).click();
+  await page.getByRole('button', { name: 'Entrar como administrador' }).click();
+  await page.getByLabel('PIN do administrador', { exact: true }).fill('1234');
+  await page.getByRole('button', { name: 'Acessar como administrador' }).click();
+  await page.getByLabel('PIN do administrador', { exact: true }).fill('1234');
+  await page.getByRole('button', { name: 'Acessar como administrador' }).click();
+  await page.getByLabel('PIN do administrador', { exact: true }).fill('1234');
+  await page.getByRole('button', { name: 'Acessar como administrador' }).click();
+  await expect(page.locator('#aviso-admin')).toContainText('Tentativas esgotadas');
+  await expect(page.locator('#modo-admin')).toBeHidden();
+  await page.getByRole('button', { name: 'Entrar como professor' }).click();
+  await page.getByLabel('PIN do professor', { exact: true }).fill('9999');
+  await page.getByRole('button', { name: 'Acessar como professor' }).click();
+  await page.getByLabel('PIN do professor', { exact: true }).fill('8888');
+  await page.getByRole('button', { name: 'Acessar como professor' }).click();
+  await page.getByLabel('PIN do professor', { exact: true }).fill('7777');
+  await page.getByRole('button', { name: 'Acessar como professor' }).click();
+  await expect(page.locator('#aviso-professor')).toContainText('Tentativas esgotadas');
+  await expect(page.locator('#lista-professor')).not.toContainText('Ana');
+  await expect(page.locator('#lista-professor')).not.toContainText('Bruno');
+});

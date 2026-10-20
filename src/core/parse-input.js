@@ -14,7 +14,9 @@ const falha = (erro, detalhe) => ({ ok: false, erro, detalhe });
  */
 export function parseInput(texto) {
   if (typeof texto !== 'string') return falha('ENTRADA_VAZIA');
-  if (Buffer.byteLength(texto, 'utf8') > LIMITE_BYTES) return falha('ENTRADA_MUITO_GRANDE');
+  if (texto.length * 3 > LIMITE_BYTES && new TextEncoder().encode(texto).length > LIMITE_BYTES) {
+    return falha('ENTRADA_MUITO_GRANDE');
+  }
 
   const comPontoEVirgula = texto.includes(';');
   const formato = comPontoEVirgula ? NUMERO_COM_PONTO_E_VIRGULA : NUMERO_SEM_PONTO_E_VIRGULA;
