@@ -1,0 +1,12 @@
+node_modules/
+dados/
+coverage/
+dist/
+build/
+*.log
+*.log.1
+.env*
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
